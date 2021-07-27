@@ -1,7 +1,5 @@
 library preference_list;
 
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+export 'src/preference_list_item.dart';
+export 'src/preference_list_section.dart';
+export 'src/preference_list.dart';
