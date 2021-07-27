@@ -8,24 +8,11 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+
 - [preference_list](#preference_list)
   - [Quick Start](#quick-start)
     - [Installation](#installation)
     - [Usage](#usage)
-  - [License](#license)
-
-  - [Quick Start](#quick-start)
-    - [Installation](#installation)
-    - [Usage](#usage)
-  - [License](#license)
-
-  - [Quick Start](#quick-start)
-    - [Installation](#installation)
-    - [Usage](#usage)
-  - [API](#api)
-    - [ScreenTextExtractor](#screentextextractor)
-  - [License](#license)
-
   - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
