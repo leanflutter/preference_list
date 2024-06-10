@@ -98,7 +98,7 @@ class PreferenceListItem extends StatelessWidget {
                               style: TextStyle(
                                 color: Theme.of(context)
                                     .textTheme
-                                    .headline6
+                                    .titleLarge
                                     ?.color,
                                 fontSize: 14,
                               ),
