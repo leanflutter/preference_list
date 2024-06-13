@@ -2,6 +2,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class PreferenceListItem extends StatelessWidget {
+  const PreferenceListItem({
+    super.key,
+    this.padding,
+    this.icon,
+    this.title,
+    this.summary,
+    this.detailText,
+    this.accessoryView,
+    this.bottomView,
+    this.disabled = false,
+    this.onTap,
+  });
+
   final EdgeInsets? padding;
   final Widget? icon;
   final Widget? title;
@@ -12,29 +25,14 @@ class PreferenceListItem extends StatelessWidget {
   final bool? disabled;
   final VoidCallback? onTap;
 
-  const PreferenceListItem({
-    Key? key,
-    this.padding,
-    this.icon,
-    this.title,
-    this.summary,
-    this.detailText,
-    this.accessoryView,
-    this.bottomView,
-    this.disabled = false,
-    this.onTap,
-  }) : super(key: key);
-
   _onTap() {
-    if (onTap != null) {
-      onTap!();
-    }
+    onTap?.call();
   }
 
   Widget buildDetailText(BuildContext context) {
     if (detailText != null) {
       return DefaultTextStyle(
-        style: TextStyle(
+        style: const TextStyle(
           color: Color(0xff999999),
           fontSize: 13,
         ),
@@ -49,7 +47,7 @@ class PreferenceListItem extends StatelessWidget {
     if (accessoryView != null) {
       return accessoryView!;
     } else {
-      return Padding(
+      return const Padding(
         padding: EdgeInsets.only(left: 4),
         child: Icon(
           CupertinoIcons.chevron_forward,
@@ -67,7 +65,7 @@ class PreferenceListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Theme.of(context).canvasColor,
+      color: Theme.of(context).colorScheme.surfaceContainerHigh,
       child: InkWell(
         splashColor: Colors.transparent,
         onTap: disabled! ? null : _onTap,
@@ -76,16 +74,16 @@ class PreferenceListItem extends StatelessWidget {
           children: [
             Container(
               width: double.infinity,
-              constraints: BoxConstraints(
+              constraints: const BoxConstraints(
                 minHeight: 48,
               ),
-              padding: padding ?? EdgeInsets.fromLTRB(12, 0, 12, 0),
+              padding: padding ?? const EdgeInsets.fromLTRB(12, 0, 12, 0),
               child: Row(
                 children: [
                   if (icon != null)
                     Container(
+                      margin: const EdgeInsets.only(right: 10),
                       child: icon,
-                      margin: EdgeInsets.only(right: 10),
                     ),
                   if (title != null || summary != null)
                     Expanded(
@@ -106,12 +104,13 @@ class PreferenceListItem extends StatelessWidget {
                             ),
                           if (summary != null)
                             DefaultTextStyle(
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Color(0xff999999),
                                 fontSize: 12,
                               ),
                               child: Padding(
-                                padding: EdgeInsets.only(top: 4, bottom: 4),
+                                padding:
+                                    const EdgeInsets.only(top: 4, bottom: 4),
                                 child: summary,
                               ),
                             ),
@@ -132,46 +131,36 @@ class PreferenceListItem extends StatelessWidget {
 }
 
 class PreferenceListRadioItem<T> extends PreferenceListItem {
+  const PreferenceListRadioItem({
+    super.key,
+    super.icon,
+    super.title,
+    super.summary,
+    super.detailText,
+    super.accessoryView,
+    super.onTap,
+    @required this.value,
+    @required this.groupValue,
+    @required this.onChanged,
+  });
+
   final T? value;
   final T? groupValue;
   final ValueChanged<T>? onChanged;
 
-  const PreferenceListRadioItem({
-    Key? key,
-    Widget? icon,
-    Widget? title,
-    Widget? summary,
-    Widget? detailText,
-    Widget? accessoryView,
-    VoidCallback? onTap,
-    @required this.value,
-    @required this.groupValue,
-    @required this.onChanged,
-  }) : super(
-          key: key,
-          icon: icon,
-          title: title,
-          summary: summary,
-          detailText: detailText,
-          accessoryView: accessoryView,
-          onTap: onTap,
-        );
-
   @override
   void _onTap() {
-    onChanged!(value!);
+    onChanged!(value as T);
     super._onTap();
   }
 
   @override
   Widget buildAccessoryView(BuildContext context) {
     if (value != null && value == groupValue) {
-      return Container(
-        child: Icon(
-          CupertinoIcons.checkmark_alt_circle_fill,
-          size: 22,
-          color: Theme.of(context).primaryColor,
-        ),
+      return Icon(
+        CupertinoIcons.checkmark_alt_circle_fill,
+        size: 22,
+        color: Theme.of(context).primaryColor,
       );
     }
     return Container();
@@ -179,28 +168,20 @@ class PreferenceListRadioItem<T> extends PreferenceListItem {
 }
 
 class PreferenceListSwitchItem extends PreferenceListItem {
-  final bool? value;
-  final ValueChanged<bool>? onChanged;
-
   const PreferenceListSwitchItem({
-    Key? key,
-    Widget? icon,
-    Widget? title,
-    Widget? summary,
-    Widget? detailText,
-    Widget? accessoryView,
-    VoidCallback? onTap,
+    super.key,
+    super.icon,
+    super.title,
+    super.summary,
+    super.detailText,
+    super.accessoryView,
+    super.onTap,
     @required this.value,
     @required this.onChanged,
-  }) : super(
-          key: key,
-          icon: icon,
-          title: title,
-          summary: summary,
-          detailText: detailText,
-          accessoryView: accessoryView,
-          onTap: onTap,
-        );
+  });
+
+  final bool? value;
+  final ValueChanged<bool>? onChanged;
 
   @override
   void _onTap() {
@@ -210,7 +191,7 @@ class PreferenceListSwitchItem extends PreferenceListItem {
 
   @override
   Widget buildAccessoryView(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 22,
       width: 34,
       child: Transform.scale(
@@ -226,30 +207,23 @@ class PreferenceListSwitchItem extends PreferenceListItem {
 }
 
 class PreferenceListTextFieldItem extends PreferenceListItem {
-  final String? placeholder;
-  final ValueChanged<String>? onChanged;
-  final VoidCallback? onEditingComplete;
-  final ValueChanged<String>? onSubmitted;
-
   const PreferenceListTextFieldItem({
-    Key? key,
-    Widget? icon,
-    Widget? title,
-    Widget? summary,
-    Widget? accessoryView,
-    VoidCallback? onTap,
+    super.key,
+    super.icon,
+    super.title,
+    super.summary,
+    super.accessoryView,
+    super.onTap,
     this.placeholder,
     this.onChanged,
     this.onEditingComplete,
     this.onSubmitted,
-  }) : super(
-          key: key,
-          icon: icon,
-          title: title,
-          summary: summary,
-          accessoryView: accessoryView,
-          onTap: onTap,
-        );
+  });
+
+  final String? placeholder;
+  final ValueChanged<String>? onChanged;
+  final VoidCallback? onEditingComplete;
+  final ValueChanged<String>? onSubmitted;
 
   @override
   bool get disabled => true;
@@ -259,9 +233,9 @@ class PreferenceListTextFieldItem extends PreferenceListItem {
     return Expanded(
       child: CupertinoTextField(
         padding: EdgeInsets.zero,
-        decoration: BoxDecoration(),
+        decoration: const BoxDecoration(),
         placeholder: placeholder,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 14,
         ),
         onChanged: onChanged,

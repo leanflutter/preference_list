@@ -1,10 +1,12 @@
-import 'package:flutter/material.dart';
 import 'package:bot_toast/bot_toast.dart';
+import 'package:flutter/material.dart';
 import 'package:preference_list/preference_list.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
-  _HomePageState createState() => _HomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
@@ -13,37 +15,39 @@ class _HomePageState extends State<HomePage> {
     return PreferenceList(
       children: <Widget>[
         PreferenceListSection(
-          title: Text('APPEARANCE'),
+          title: const Text('APPEARANCE'),
           children: [
             PreferenceListSwitchItem(
-              title: Text('Dark Appearance'),
+              title: const Text('Dark Appearance'),
               value: _isDarkAppearance,
               onChanged: (newValue) {
                 setState(() {
                   _isDarkAppearance = !_isDarkAppearance;
                 });
               },
-            )
+            ),
           ],
         ),
         PreferenceListSection(
-          title: Text('DISPLAY ZOOM'),
-          description: Text(
-              'Choose a view for iphone Zoomed shows larger controls. Standard shows more content'),
+          title: const Text('DISPLAY ZOOM'),
+          description: const Text(
+            'Choose a view for iphone Zoomed shows larger controls. Standard shows more content',
+          ),
           children: [
             PreferenceListItem(
-              title: Text('View'),
-              detailText: Text('Standard'),
+              title: const Text('View'),
+              detailText: const Text('Standard'),
               onTap: () {
                 BotToast.showText(text: 'Tapped!');
               },
-            )
+            ),
           ],
         ),
         PreferenceListSection(
-          title: Text('PAIRED DEVICES'),
-          description: Text(
-              'Removing trusted computers will delete all of the records of computers that you have paired with previously'),
+          title: const Text('PAIRED DEVICES'),
+          description: const Text(
+            'Removing trusted computers will delete all of the records of computers that you have paired with previously',
+          ),
           children: [
             PreferenceListItem(
               title: Text(
@@ -54,7 +58,7 @@ class _HomePageState extends State<HomePage> {
               onTap: () {
                 BotToast.showText(text: 'Tapped!');
               },
-            )
+            ),
           ],
         ),
       ],
